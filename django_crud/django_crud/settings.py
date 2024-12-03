@@ -11,21 +11,31 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import environ
+import os
 import pymysql
 pymysql.install_as_MySQLdb()
+
+# Initialize environment variables
+env = environ.Env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Construct the path to the .env file
+env_path = os.path.join(BASE_DIR, '.env')
 
+# Load the .env file
+env.read_env(env_path)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-rk5#*b0g0d$04*&!99=@1)s%%j6o_zaxp3cnc2sm+87n25ecu7'
+SECRET_KEY = env('SECRET_KEY')
+# SECRET_KEY = 'django-insecure-rk5#*b0g0d$04*&!99=@1)s%%j6o_zaxp3cnc2sm+87n25ecu7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool('DEBUG', default=False)
 
 ALLOWED_HOSTS = [
     'localhost',
@@ -82,9 +92,9 @@ WSGI_APPLICATION = 'django_crud.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'django_blog',  # Replace with your database name
-        'USER': 'root',      # Replace with your MySQL user
-        'PASSWORD': 'admin@123',  # Replace with your MySQL password
+        'NAME': env('DATABASE_NAME'),
+        'USER': env('DATABASE_USER'),
+        'PASSWORD': env('DATABASE_PASSWORD'),
         'HOST': 'localhost',   # Usually 'localhost' or '127.0.0.1'
         'PORT': '3306', 
     }
