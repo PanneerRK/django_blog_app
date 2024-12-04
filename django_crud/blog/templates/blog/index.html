@@ -1,6 +1,69 @@
 {% extends 'blog/base.html' %}
 {% block content %}
-<div class="container-fluid ">
+<section class="section">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-sm-6">
+                <h2 class="posts-entry-title">Latest Posts</h2>
+            </div>           
+        </div>
+
+        <div class="row">
+            {% if page_obj %}
+                {% for post in page_obj %}
+                    <div class="col-lg-4 mb-4">
+                        <div class="post-entry-alt">
+                            <a href="{% url 'blog:detail' slug=post.slug %}" class="img-link"><img src="{{ post.img_url }}" alt="Image" class="img-fluid"></a>
+                            <div class="excerpt">
+                                <h2><a href="{% url 'blog:detail' slug=post.slug %}">{{ post.title }}</a></h2>
+                                <div class="post-meta align-items-center text-left clearfix">
+                                    <span class="d-inline-block mt-1">Category <a href="#">{{  post.category.name }}</a></span>
+                                    <span>&nbsp;-&nbsp; {{ post.created_at | date:"F j, Y" }}</span>
+                                </div>
+                                <p>{{ post.content|truncatechars:60  }} <a href="{% url 'blog:detail' slug=post.slug %}" class="read-more">Continue Reading</a></p>
+                                <p></p>
+                            </div>
+                        </div>            
+                    </div>
+                {% endfor %}
+                <div class="row text-center pt-5 border-top">
+                    {% if page_obj.has_other_pages %}
+                    <div class="col-md-12">
+                        <div class="custom-pagination">
+                            <!-- Previous Page -->
+                            {% if page_obj.has_previous %}
+                                <a href="?page={{ page_obj.previous_page_number }}"><<</a>
+                            {% endif %}
+                            
+                            <!-- Page Numbers -->
+                            {% for page_num in page_obj.paginator.page_range %}
+                                {% if page_num == page_obj.number %}
+                                    <span>{{ page_num }}</span> <!-- Current page -->
+                                {% elif page_num > page_obj.number|add:'-3' and page_num < page_obj.number|add:'3' %}
+                                    <a href="?page={{ page_num }}">{{ page_num }}</a>
+                                {% elif page_num == 1 or page_num == page_obj.paginator.num_pages %}
+                                    <a href="?page={{ page_num }}">{{ page_num }}</a>
+                                {% elif forloop.first or forloop.last %}
+                                    <span>...</span>
+                                {% endif %}
+                            {% endfor %}
+                            
+                            <!-- Next Page -->
+                            {% if page_obj.has_next %}
+                                <a href="?page={{ page_obj.next_page_number }}">>></a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            {% else %}
+                <p>No posts available</p>
+            {% endif %}
+        </div>        
+    </div>
+</section>
+
+{% comment %} <div class="container-fluid ">
     <div class="row">
         <h2 >Latest Posts</h2>
     </div>
@@ -64,9 +127,7 @@
             <p>No posts available</p>
         {% endif %}
     </div>
-    <div class="row">
-        
-    </div>
-    
-</div>
+    <div class="row">        
+    </div>    
+</div> {% endcomment %}
 {% endblock %}

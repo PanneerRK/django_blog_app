@@ -1,12 +1,107 @@
 {% extends 'blog/base.html' %}
+{% load static %}
 {% block content %}
-    <div class="container-fluid ">
-        <h3>About Us</h3>
-        <div class="d-flex gap-3 justify-content-center mt-5">
-            <img src="https://picsum.photos/300/300" alt="">
-            <div class="content">
-                {{ about_content }}
-            </div>            
-        </div>
-    </div>
+    <div class="site-cover site-cover-sm same-height overlay single-page" style="background-image: url({% static 'images/hero_1.jpg' %});">
+		<div class="container">
+			<div class="row same-height justify-content-center">
+				<div class="col-md-6">
+					<div class="post-entry text-center">
+						<h1 class="mb-4">About Us</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="section sec-halfs py-0 my-5">
+		<div class="container">
+			<div class="d-lg-flex align-items-stretch">
+				<div class="text">
+					<p class="mb-4">{{ about_content }}</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="section sec-features">
+		<div class="container">
+			<div class="row g-5">
+				<div class="col-12 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="0">
+					<div class="feature d-flex">
+						<span class="bi-bag-check-fill"></span>
+						<div>
+							<h3>Building your blog</h3>
+							<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
+						</div>
+					</div>
+				</div>
+				<div class="col-12 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+					<div class="feature d-flex">
+						<span class="bi-wallet-fill"></span>
+						<div>
+							<h3>Resources and insights</h3>
+							<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
+						</div>
+					</div>
+				</div>
+				<div class="col-12 col-sm-6 col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+					<div class="feature d-flex">
+						<span class="bi-pie-chart-fill"></span>
+						<div>
+							<h3>Blog just for you</h3>
+							<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. </p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="section">
+		<div class="container">
+			<div class="row justify-content-between">
+				<div class="col-lg-7 mb-4 mb-lg-0">
+					<img src="{% static 'images/img_7_sq.jpg' %}" alt="Image" class="img-fluid rounded
+					">
+				</div>
+				<div class="col-lg-4 ps-lg-2">
+					<div class="mb-5">
+						<h2 class="text-black h4">Publishing platform for professional bloggers</h2>
+						<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+					</div>
+					<div class="d-flex mb-3 service-alt">
+						<div>
+							<span class="bi-wallet-fill me-4"></span>
+						</div>
+						<div>
+							<h3>Building your blog</h3>
+							<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+						</div>
+					</div>
+
+					<div class="d-flex mb-3 service-alt">
+						<div>
+							<span class="bi-pie-chart-fill me-4"></span>
+						</div>
+						<div>
+							<h3>Resources and insights</h3>
+							<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+						</div>
+					</div>
+
+					<div class="d-flex mb-3 service-alt">
+						<div>
+							<span class="bi-bag-check-fill me-4"></span>
+						</div>
+						<div>
+							<h3>Blog just for you</h3>
+							<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
 {% endblock %}    
