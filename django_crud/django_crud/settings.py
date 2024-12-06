@@ -14,6 +14,7 @@ from pathlib import Path
 import environ
 import os
 import pymysql
+from django.utils.translation import gettext_lazy as _
 pymysql.install_as_MySQLdb()
 
 # Initialize environment variables
@@ -46,6 +47,7 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    "unfold",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -63,6 +65,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.locale.LocaleMiddleware",
 ]
 
 ROOT_URLCONF = 'django_crud.urls'
@@ -131,6 +134,13 @@ USE_I18N = True
 
 USE_TZ = True
 
+UNFOLD = {
+    "SHOW_LANGUAGES": True,
+}
+LANGUAGES = (
+    ("de", _("German")),
+    ("en", _("English")),
+)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
