@@ -10,4 +10,5 @@ urlpatterns = [
     path("old_url", views.old_url_redirect, name="old_url"),
     path("contact", views.contact_view, name="contact"),
     path("about", views.about_view, name="about"),
+    path('admin/get_subcategories/', views.get_subcategories, name='get_subcategories'),
 ]

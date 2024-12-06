@@ -1,5 +1,5 @@
 from typing import Any
-from blog.models import Post, Category
+from blog.models import Post, Category, Subcategory
 from django.core.management.base import BaseCommand
 import random
 
@@ -58,32 +58,13 @@ class Command(BaseCommand):
         ]
 
         img_urls = [
-            "https://picsum.photos/id/1/800/400",
-            "https://picsum.photos/id/2/800/400",
-            "https://picsum.photos/id/3/800/400",
-            "https://picsum.photos/id/4/800/400",
-            "https://picsum.photos/id/5/800/400",
-            "https://picsum.photos/id/6/800/400",
-            "https://picsum.photos/id/7/800/400",
-            "https://picsum.photos/id/8/800/400",
-            "https://picsum.photos/id/9/800/400",
-            "https://picsum.photos/id/10/800/400",
-            "https://picsum.photos/id/11/800/400",
-            "https://picsum.photos/id/12/800/400",
-            "https://picsum.photos/id/13/800/400",
-            "https://picsum.photos/id/14/800/400",
-            "https://picsum.photos/id/15/800/400",
-            "https://picsum.photos/id/16/800/400",
-            "https://picsum.photos/id/17/800/400",
-            "https://picsum.photos/id/18/800/400",
-            "https://picsum.photos/id/19/800/400",
-            "https://picsum.photos/id/20/800/400",
+            f"https://picsum.photos/id/{i+1}/800/400" for i in range(len(titles))
         ]
 
-        categories = Category.objects.all()
+        subcategories = Subcategory.objects.all()
 
         for title, content, img_url in zip(titles, contents, img_urls):
-            category = random.choice(categories)
-            Post.objects.create(title=title, content=content, img_url=img_url, category=category)
+            subcategory = random.choice(subcategories)
+            Post.objects.create(title=title, content=content, img_url=img_url, category=Subcategory.category, subcategory=subcategory)
 
-        self.stdout.write(self.style.SUCCESS("Inserting data successfully!"))
+        self.stdout.write(self.style.SUCCESS("Posts inserted successfully!"))

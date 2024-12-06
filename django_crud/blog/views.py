@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.urls import reverse
-from .models import Post, AboutUs
+from .models import Post, AboutUs, Subcategory, Category
 import logging
 from django.http import Http404
 from django.core.paginator import Paginator
 from .forms import ContactForm
 from django.core.mail import send_mail
+from django.http import JsonResponse
 
 # Create your views here.
 def index(request):
@@ -58,3 +59,15 @@ def contact_view(request):
 def about_view(request):
     about_content = AboutUs.objects.first().content
     return render(request, "blog/about.html", {'about_content':about_content})
+
+def get_subcategories(request):
+    category_id = request.GET.get('category_id')
+    if category_id:
+        # Get only the subcategories that belong to the selected category
+        subcategories = Subcategory.objects.filter(category_id=category_id)
+        # Return the subcategories as JSON
+        data = {
+            'subcategories': [{'id': sub.id, 'name': sub.name} for sub in subcategories]
+        }
+        return JsonResponse(data)
+    return JsonResponse({'subcategories': []})  # Return empty if no category_id is provided

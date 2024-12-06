@@ -1,10 +1,11 @@
 from django.contrib import admin
-from .models import Post, Category, AboutUs
+from .models import Post, Category, AboutUs, Subcategory
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.admin import GroupAdmin as BaseGroupAdmin
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User, Group
 from unfold.admin import ModelAdmin
+from django import forms
 
 admin.site.unregister(User)
 admin.site.unregister(Group)
@@ -22,12 +23,28 @@ class UserAdmin(BaseUserAdmin, ModelAdmin):
 class GroupAdmin(BaseGroupAdmin, ModelAdmin):
     pass
 
-class PostAdmin(ModelAdmin):
-    list_display = ('title', 'content', 'category')
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['title', 'content', 'category', 'subcategory', 'img_url']
+    
+    class Media:
+        js = ('admin/js/vendor/jquery/jquery.js', 'js/admin/dependent_dropdown.js')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Add 'form-control' class to category and subcategory fields
+        self.fields['category'].widget.attrs.update({'class': 'form-control'})
+        self.fields['subcategory'].widget.attrs.update({'class': 'form-control'})
+
+class PostAdmin(ModelAdmin):    
+    list_display = ('title', 'content', 'category', 'subcategory')
     search_fields = ('title', 'content')
     list_filter = ('category', 'created_at')
+    form = PostForm
 
 # Register your models here.
 admin.site.register(Post, PostAdmin)
 admin.site.register(Category, ModelAdmin)
+admin.site.register(Subcategory, ModelAdmin)
 admin.site.register(AboutUs, ModelAdmin)
