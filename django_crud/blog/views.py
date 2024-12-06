@@ -6,15 +6,7 @@ import logging
 from django.http import Http404
 from django.core.paginator import Paginator
 from .forms import ContactForm
-
-#Static post data
-# posts = [
-#     {'id':1, 'title': 'Post 1', 'content' : 'Content of post 1'},
-#     {'id':2, 'title': 'Post 2', 'content' : 'Content of post 2'},
-#     {'id':3, 'title': 'Post 3', 'content' : 'Content of post 3'},
-#     {'id':4, 'title': 'Post 4', 'content' : 'Content of post 4'},
-# ]
-
+from django.core.mail import send_mail
 
 # Create your views here.
 def index(request):
@@ -50,14 +42,17 @@ def contact_view(request):
         name = request.POST.get('name')
         email = request.POST.get('email')
         message = request.POST.get('message')
-        logger = logging.getLogger("TESTING")
+        # logger = logging.getLogger("TESTING")
+        subject = f"New Contact Form Submission from {name}"
+        full_message = f"Message:\n{message}\n\nFrom: {name}\nEmail: {email}"
         if form.is_valid():
-            logger.debug(f'Post data is {form.cleaned_data['name']} {form.cleaned_data['email']} {form.cleaned_data['message']}')
+            send_mail(subject, full_message, email, ['webwizardsusa@gmail.com'])
+            # logger.debug(f'Post data is {form.cleaned_data['name']} {form.cleaned_data['email']} {form.cleaned_data['message']}')
             success_message = "Your email is sent successfully"
             return render(request, "blog/contact.html", {'form':form, 'success_message':success_message})
         else:
-            logger.debug('Form is invalid')
-        return render(request, "blog/contact.html", {'form':form, 'name':name, 'email':email, 'message':message})
+            # logger.debug('Form is invalid')
+            return render(request, "blog/contact.html", {'form':form, 'name':name, 'email':email, 'message':message})
     return render(request, "blog/contact.html")
 
 def about_view(request):
