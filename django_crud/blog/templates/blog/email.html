@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You Email</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .email-header {
+            text-align: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .email-header h1 {
+            color: #007BFF;
+            font-size: 24px;
+            margin: 0;
+        }
+        .email-body {
+            padding: 20px 0;
+        }
+        .email-body p {
+            margin: 10px 0;
+        }
+        .email-footer {
+            text-align: center;
+            font-size: 12px;
+            color: #777;
+            margin-top: 20px;
+        }
+        a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="email-header">
+            <h1>Thank You for Contacting Us!</h1>
+        </div>
+        <div class="email-body">
+            <p>Hi {{ name }},</p>
+            <p>Thank you for reaching out to us. We have received your message and will get back to you as soon as possible.</p>
+            <p><strong>Here are the details you submitted:</strong></p>
+            <p>
+                <strong>Name:</strong> {{ name }} <br>
+                <strong>Email:</strong> {{ email }} <br>
+                <strong>Message:</strong> {{ message }}
+            </p>
+            <p>Thank you,</p>
+            <p>The WWU Team</p>
+        </div>
+        <div class="email-footer">
+            <p>&copy; 2025 - WWU. All rights reserved.</p>
+            <p><a href="#">Visit our website</a></p>
+        </div>
+    </div>
+</body>
+</html>

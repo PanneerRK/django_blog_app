@@ -8,6 +8,7 @@ from django.core.paginator import Paginator
 from .forms import ContactForm
 from django.core.mail import send_mail
 from django.http import JsonResponse
+from django.template import loader
 
 # Create your views here.
 def index(request):
@@ -44,10 +45,17 @@ def contact_view(request):
         email = request.POST.get('email')
         message = request.POST.get('message')
         # logger = logging.getLogger("TESTING")
-        subject = f"New Contact Form Submission from {name}"
-        full_message = f"Message:\n{message}\n\nFrom: {name}\nEmail: {email}"
+        subject = f"New Contact from {name}"
+        # full_message = f"Message:\n{message}\n\nFrom: {name}\nEmail: {email}"
         if form.is_valid():
-            send_mail(subject, full_message, email, ['webwizardsusa@gmail.com'])
+            html_message = loader.render_to_string(
+                'blog/email.html',
+                {
+                    'name': name,
+                    'email' : email,
+                    'message':  message,
+                })  
+            send_mail(subject, 'Contact Form', 'webwizardsusa@gmail.com', [email], html_message=html_message,)
             # logger.debug(f'Post data is {form.cleaned_data['name']} {form.cleaned_data['email']} {form.cleaned_data['message']}')
             success_message = "Your email is sent successfully"
             return render(request, "blog/contact.html", {'form':form, 'success_message':success_message})
