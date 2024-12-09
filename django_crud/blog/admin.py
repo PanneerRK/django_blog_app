@@ -33,18 +33,32 @@ class PostForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Add 'form-control' class to category and subcategory fields
         self.fields['category'].widget.attrs.update({'class': 'form-control'})
         self.fields['subcategory'].widget.attrs.update({'class': 'form-control'})
+        # Set initial value for 'subcategory' if this is an edit form
+        if self.instance and self.instance.subcategory:
+            self.fields['subcategory'].initial = self.instance.subcategory.id
 
 class PostAdmin(ModelAdmin):    
-    list_display = ('title', 'content', 'category', 'subcategory')
+    list_display = ('title', 'category', 'subcategory', 'img_url')
     search_fields = ('title', 'content')
     list_filter = ('category', 'created_at')
     form = PostForm
 
+class CategoryAdmin(ModelAdmin):    
+    list_display = ['name']
+    search_fields = ['name']
+
+class SubcategoryAdmin(ModelAdmin):    
+    list_display = ['name','category']
+    search_fields = ['name']
+
+class AboutUsAdmin(ModelAdmin):    
+    list_display = ['content']
+    search_fields = ['content']
+
 # Register your models here.
 admin.site.register(Post, PostAdmin)
-admin.site.register(Category, ModelAdmin)
-admin.site.register(Subcategory, ModelAdmin)
-admin.site.register(AboutUs, ModelAdmin)
+admin.site.register(Category, CategoryAdmin)
+admin.site.register(Subcategory, SubcategoryAdmin)
+admin.site.register(AboutUs, AboutUsAdmin)
